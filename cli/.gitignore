@@ -1,0 +1,7 @@
+node_modules
+package-lock.json
+
+# This file contains configuration settings.
+# Some of these cannot be committed to
+# a source code repository.
+env.sh

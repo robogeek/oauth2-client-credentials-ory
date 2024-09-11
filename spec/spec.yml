@@ -26,11 +26,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  date:
-                    type: string
-                    format: date-time
+                $ref: '#/components/schemas/dateResponse'
   /echo:
     post:
       summary: Return posted data
@@ -48,7 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/echoThing'
         '400':
           description: Bad request
           content:
@@ -99,26 +95,29 @@ components:
     echoThing:
       type: object
       description: Thingy to echo
+      required:
+        - title
+        - body
       properties:
         title:
           type: string
         body:
           type: string
 
+    dateResponse:
+      type: object
+      required:
+        - date
+      properties:
+        date:
+          type: string
+          format: date-time
+
     problem:
       type: object
       description: |
         reusable error response. From https://opensource.zalando.com/problem/schema.yaml.
       properties:
-        type:
-          type: string
-          format: uri
-          description: |
-            An absolute URI that identifies the problem type.
-            When dereferenced, it SHOULD provide human-readable documentation for the problem type
-            (e.g., using HTML).
-          default: 'about:blank'
-          example: 'https://zalando.github.io/problem/constraint-violation'
         title:
           type: string
           description: |
@@ -141,12 +140,6 @@ components:
             A human readable explanation specific to this occurrence of the
             problem.
           example: Connection to database timed out
-        instance:
-          type: string
-          format: uri
-          description: |
-            An absolute URI that identifies the specific occurrence of the problem.
-            It may or may not yield further information if dereferenced.
 
     clientCredentialRequest:
       type: object
