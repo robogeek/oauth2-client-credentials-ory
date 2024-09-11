@@ -1,0 +1,46 @@
+
+services:
+
+  hydra:
+    image: $HYDRA_IMAGE
+    ports:
+      - "4444:4444" # Public port
+      - "4445:4445" # Admin port
+      - "5555:5555" # Port for hydra token user
+    # If one needs to override the configuration:
+    # command: serve -c /etc/config/hydra/hydra.yml all --dev
+    volumes:
+      # For the SQLITE3 database, mount the database file
+      # into the container.
+      - ./hydra.sqlite:/var/lib/sqlite/db.sqlite:rw
+
+      # When overriding the configuration, the config
+      # file must be mounted into the container.
+      # In this case it is a sample configuration
+      # in the Hydra repository.
+      # - ./contrib/quickstart/5-min:/etc/config/hydra
+    environment:
+      # Instead of using a configuration file to make
+      # configuration settings, environment variables
+      # can be used.  Ory has a way of interpreting
+      # environment variables to match any value which
+      # can be in the configuration.
+      # See: https://www.ory.sh/docs/ecosystem/configuring
+      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true
+      
+      # THis must be generated for example by using
+      # the mksecret script.
+      - SECRETS_SYSTEM=LqO8EXAMPLEWM5EXAMPLEiXIEXAMPLEWB2W
+    restart: unless-stopped
+    # If using other containers like hydra-migrate or
+    # a database like MySQL, the Hydra container should
+    # not start until those are running.
+    # depends_on:
+    #   - hydra-migrate
+    networks:
+      - hydra
+
+# Create the hydra network separately
+networks:
+  hydra:
+    external: true
