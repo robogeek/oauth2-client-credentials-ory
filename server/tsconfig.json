@@ -1,0 +1,25 @@
+{
+    "include": [ 
+        "src/**/*.ts", "src/**/*.js", "src/**/*.mjs",
+        "src/**/*.yml"
+    ],
+    "compilerOptions": {
+        "lib": [ "es6", "es2022", "esnext", "DOM" ],
+        "target": "es2022",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "strict": true,
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "skipLibCheck": true,
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "declaration": true,
+        "declarationMap": true,
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "esModuleInterop": true
+    }
+}
